@@ -22,4 +22,8 @@ jobs:
         run: npm install
 
       - name: Run script
+        env:
+          KOKO_USERNAME: ${{ secrets.KOKO_USERNAME }}
+          KOKO_PASSWORD: ${{ secrets.KOKO_PASSWORD }}
+          DATA_SUBMIT_ENDPOIT: ${{ secrets.DATA_SUBMIT_ENDPOIT }}
         run: node scrape.js
