@@ -1,0 +1,43 @@
+[2026-02-14 14:07:43 : INFO] - [scrape.js: anonymous:64] - ----------| NEW PROCESS START |----------
+[2026-02-14 14:07:43 : INFO] - [scrape.js: appProcess:15] - Starting the bot...
+[2026-02-14 14:07:49 : INFO] - [web.js: WebHandler.kokoLogin:55] - 1. Enter User Name
+[2026-02-14 14:07:53 : INFO] - [web.js: WebHandler.kokoLogin:60] - 2. Enter Password
+[2026-02-14 14:07:57 : INFO] - [web.js: WebHandler.kokoLogin:65] - Waiting untail login button avilable to click
+[2026-02-14 14:07:59 : INFO] - [web.js: WebHandler.kokoLogin:75] - 3. Click Login Button
+[2026-02-14 14:08:01 : INFO] - [web.js: WebHandler.kokoLogin:82] - Koko Login Done
+[2026-02-14 14:08:01 : INFO] - [scrape.js: appProcess:31] - Login Result true
+[2026-02-14 14:08:01 : INFO] - [scrape.js: appProcess:34] - LOGIN SUCCESS
+[2026-02-14 14:08:04 : INFO] - [web.js: WebHandler.kokoExtractProcess:95] - 4. Goto Orders
+[2026-02-14 14:08:05 : INFO] - [web.js: WebHandler.kokoExtractProcess:99] - Waiting for data rows to populate...
+[2026-02-14 14:08:12 : INFO] - [web.js: WebHandler.kokoExtractProcess:119] - Records saved to koko.json file
+[2026-02-14 14:08:12 : INFO] - [web.js: WebHandler.kokoExtractProcess:121] - Click Logout Menu Button
+[2026-02-14 14:08:16 : INFO] - [web.js: WebHandler.kokoExtractProcess:133] - Click Logout Button
+[2026-02-14 14:08:16 : INFO] - [web.js: WebHandler.kokoExtractProcess:140] - Koko Logout scussfully
+[2026-02-14 14:08:18 : INFO] - [scrape.js: appProcess:40] - Data Extraction Complete
+[2026-02-14 14:08:18 : INFO] - [upload.js: uploadToGoogleSheet:11] - Read koko.json
+[2026-02-14 14:08:18 : INFO] - [upload.js: uploadToGoogleSheet:15] - Parse koko.json file data into json
+[2026-02-14 14:08:18 : INFO] - [upload.js: uploadToGoogleSheet:19] - Request to google script endpoint
+[2026-02-14 14:08:18 : INFO] - [scrape.js: appProcess:59] - -----| DONE |--------
+[2026-02-14 14:08:18 : INFO] - [scrape.js: anonymous:71] - **********| END |**********
+[2026-02-14 14:08:43 : INFO] - [scrape.js: anonymous:64] - ----------| NEW PROCESS START |----------
+[2026-02-14 14:08:43 : INFO] - [scrape.js: appProcess:15] - Starting the bot...
+[2026-02-14 14:08:48 : INFO] - [web.js: WebHandler.kokoLogin:55] - 1. Enter User Name
+[2026-02-14 14:08:52 : INFO] - [web.js: WebHandler.kokoLogin:60] - 2. Enter Password
+[2026-02-14 14:08:57 : INFO] - [web.js: WebHandler.kokoLogin:65] - Waiting untail login button avilable to click
+[2026-02-14 14:08:58 : INFO] - [web.js: WebHandler.kokoLogin:75] - 3. Click Login Button
+[2026-02-14 14:09:01 : INFO] - [web.js: WebHandler.kokoLogin:82] - Koko Login Done
+[2026-02-14 14:09:01 : INFO] - [scrape.js: appProcess:31] - Login Result true
+[2026-02-14 14:09:01 : INFO] - [scrape.js: appProcess:34] - LOGIN SUCCESS
+[2026-02-14 14:09:03 : INFO] - [web.js: WebHandler.kokoExtractProcess:95] - 4. Goto Orders
+[2026-02-14 14:09:05 : INFO] - [web.js: WebHandler.kokoExtractProcess:99] - Waiting for data rows to populate...
+[2026-02-14 14:09:12 : INFO] - [web.js: WebHandler.kokoExtractProcess:119] - Records saved to koko.json file
+[2026-02-14 14:09:12 : INFO] - [web.js: WebHandler.kokoExtractProcess:121] - Click Logout Menu Button
+[2026-02-14 14:09:16 : INFO] - [web.js: WebHandler.kokoExtractProcess:133] - Click Logout Button
+[2026-02-14 14:09:16 : INFO] - [web.js: WebHandler.kokoExtractProcess:140] - Koko Logout scussfully
+[2026-02-14 14:09:18 : INFO] - [scrape.js: appProcess:40] - Data Extraction Complete
+[2026-02-14 14:09:18 : INFO] - [upload.js: uploadToGoogleSheet:12] - Read koko.json
+[2026-02-14 14:09:18 : INFO] - [upload.js: uploadToGoogleSheet:16] - Parse koko.json file data into json
+[2026-02-14 14:09:18 : INFO] - [upload.js: uploadToGoogleSheet:20] - Request to google script endpoint
+[2026-02-14 14:09:19 : INFO] - [scrape.js: appProcess:59] - -----| DONE |--------
+[2026-02-14 14:09:19 : INFO] - [scrape.js: anonymous:71] - **********| END |**********
+[2026-02-14 14:09:29 : INFO] - [upload.js: uploadToGoogleSheet:28] - Data write to Google sheet successfully

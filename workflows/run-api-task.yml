@@ -1,0 +1,25 @@
+name: Scheduled API Request
+
+on:
+  schedule:
+    # This runs every 15 minutes (Cron syntax)
+    - cron: "*/15 * * * *"
+  workflow_dispatch: # Allows you to run it manually for testing
+
+jobs:
+  send-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run script
+        run: node index.js
