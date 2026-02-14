@@ -24,6 +24,10 @@ class WebHandler {
       headless: "new",
       args: [
         "--disable-blink-features=AutomationControlled", // Hide automation
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
       ],
     });
 
