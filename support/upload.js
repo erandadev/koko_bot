@@ -14,14 +14,15 @@ const uploadToGoogleSheet = async (
 ) => {
   try {
     logging.info(`Read ${file_name}`);
-    const rawData = fs.readFileSync(file_name, "utf8");
+    let rawData = fs.readFileSync(file_name, "utf8");
+    rawData = JSON.parse(rawData);
 
     // 2. Parse the string into a JavaScript object
     logging.info(`Parse ${file_name} file data into json`);
-    const jsonData = JSON.parse({
+    const jsonData = {
       platform: requestedPlatfrom,
       data: rawData,
-    });
+    };
 
     // 3. Send the POST request
     logging.info(`Request to google script endpoint`);

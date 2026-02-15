@@ -81,6 +81,12 @@ async function appProcess(platforms) {
         );
       }
 
+      uploadStatus = uploadToGoogleSheet(
+        requestedPlatfrom,
+        `${requestedPlatfrom}.json`,
+        process.env.DATA_SUBMIT_ENDPOIT,
+      );
+
       if (uploadStatus) {
         logging.info(`Bot ran successfully - ${requestedPlatfrom}`);
       }

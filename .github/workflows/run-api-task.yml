@@ -25,7 +25,7 @@ jobs:
         env:
           KOKO_USERNAME: ${{ secrets.KOKO_USERNAME }}
           KOKO_PASSWORD: ${{ secrets.KOKO_PASSWORD }}
-          MINT_USERNAME: ${{ secrets.MINTPAY_USERNAME }}
-          MINT_PASSWORD: ${{ secrets.MINTPAY_PASSWORD }}
+          MINTPAY_USERNAME: ${{ secrets.MINTPAY_USERNAME }}
+          MINTPAY_PASSWORD: ${{ secrets.MINTPAY_PASSWORD }}
           DATA_SUBMIT_ENDPOIT: ${{ secrets.DATA_SUBMIT_ENDPOIT }}
         run: node scrape.js

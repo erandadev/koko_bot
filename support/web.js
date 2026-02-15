@@ -22,6 +22,7 @@ class WebHandler {
   async init() {
     this.browser = await puppeteer.launch({
       headless: "new",
+      // headless: false,
       args: [
         "--disable-blink-features=AutomationControlled", // Hide automation
         "--no-sandbox",
@@ -32,7 +33,7 @@ class WebHandler {
     });
 
     this.page = await this.browser.newPage();
-    // await this.page.setViewport({ width: 1920, height: 1080 });
+    await this.page.setViewport({ width: 1920, height: 1080 });
 
     // Set a human User-Agent
     await this.page.setUserAgent(
@@ -258,20 +259,21 @@ class WebHandler {
       await this.page.goto(url, { waitUntil: "networkidle2" });
 
       logging.info(`Waiting for data rows to populate - ${requestedPlatfrom}`);
-      await this.page.waitForSelector('[data-testid="refund-button"]', {
-        visible: true,
-      });
+
+      await this.page.waitForFunction(
+        () => {
+          const divs = Array.from(document.querySelectorAll("div"));
+          return divs.some((div) => div.textContent.trim() === "Received");
+        },
+        { timeout: 15000 },
+      );
 
       await this.humanDelay(2000, 3000);
 
       logging.info(`6. Extract table data - ${requestedPlatfrom}`);
 
       const data = await this.page.evaluate(() => {
-        const rows = Array.from(
-          document.querySelectorAll(
-            "table.min-w-full.divide-y.divide-distant-wind-chime.border-b.border-distant-wind-chime tbody tr",
-          ),
-        );
+        const rows = Array.from(document.querySelectorAll("table tbody tr"));
 
         return rows.map((row) => {
           const cells = Array.from(row.querySelectorAll("td"));
