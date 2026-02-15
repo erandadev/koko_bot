@@ -21,8 +21,7 @@ class WebHandler {
 
   async init() {
     this.browser = await puppeteer.launch({
-      // headless: "new",
-      headless: false,
+      headless: "new",
       args: [
         "--disable-blink-features=AutomationControlled", // Hide automation
         "--no-sandbox",
