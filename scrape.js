@@ -73,14 +73,6 @@ async function appProcess(platforms) {
         `${requestedPlatfrom} data succefully extracted & saved in to ${requestedPlatfrom}.json!`,
       );
 
-      if (requestedPlatfrom === "KOKO") {
-        uploadStatus = uploadToGoogleSheet(
-          requestedPlatfrom,
-          `${requestedPlatfrom}.json`,
-          process.env.DATA_SUBMIT_ENDPOIT,
-        );
-      }
-
       uploadStatus = uploadToGoogleSheet(
         requestedPlatfrom,
         `${requestedPlatfrom}.json`,
@@ -101,8 +93,8 @@ async function appProcess(platforms) {
 (async () => {
   logging.info("----------| NEW PROCESS START |----------");
   try {
-    const pltforms = ["KOKO", "MINT"];
-    // const pltforms = ["KOKO"];
+    // const pltforms = ["KOKO", "MINT"];
+    const pltforms = ["KOKO"];
     // const pltforms = ["MINT"];
     await appProcess(pltforms);
     logging.info("**********| END |**********");
