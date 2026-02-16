@@ -93,8 +93,8 @@ async function appProcess(platforms) {
 (async () => {
   logging.info("----------| NEW PROCESS START |----------");
   try {
-    // const pltforms = ["KOKO", "MINT"];
-    const pltforms = ["KOKO"];
+    const pltforms = ["KOKO", "MINT"];
+    // const pltforms = ["KOKO"];
     // const pltforms = ["MINT"];
     await appProcess(pltforms);
     logging.info("**********| END |**********");
