@@ -44,6 +44,20 @@ async function appProcess(platforms) {
             process.env.MINTPAY_PASSWORD,
           );
           break;
+        case "DIRECTPAY":
+          loginStatus = await web.directPayLogin(
+            requestedPlatfrom,
+            process.env.DIRECTPAY_USERNAME,
+            process.env.DIRECTPAY_PASSWORD,
+          );
+          break;
+        case "DIRECTPAY-LNL":
+          loginStatus = await web.directPayLogin(
+            requestedPlatfrom,
+            process.env.DIRECTPAY_LNL_USERNAME,
+            process.env.DIRECTPAY_LNL_PASSWORD,
+          );
+          break;
       }
     } catch (e) {
       logging.critical(`${requestedPlatfrom} Unknown Error: ${e}`);
@@ -59,6 +73,14 @@ async function appProcess(platforms) {
           case "MINT":
             dataExtractionStatus =
               await web.mintPayExtractProcess(requestedPlatfrom);
+            break;
+          case "DIRECTPAY":
+            dataExtractionStatus =
+              await web.directPayExtractProcess(requestedPlatfrom);
+            break;
+          case "DIRECTPAY-LNL":
+            dataExtractionStatus =
+              await web.directPayExtractProcess(requestedPlatfrom);
             break;
         }
       } catch (e) {
@@ -93,7 +115,8 @@ async function appProcess(platforms) {
 (async () => {
   logging.info("----------| NEW PROCESS START |----------");
   try {
-    const pltforms = ["KOKO", "MINT"];
+    const pltforms = ["DIRECTPAY", "KOKO", "MINT", "DIRECTPAY-LNL"];
+    // const pltforms = ["DIRECTPAY"];
     // const pltforms = ["KOKO"];
     // const pltforms = ["MINT"];
     await appProcess(pltforms);

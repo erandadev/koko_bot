@@ -47,6 +47,7 @@ class WebHandler {
     return new Promise((resolve) => setTimeout(resolve, delay));
   }
 
+  // Close web browser in the end
   destroy() {
     logging.info(`Web browser closed`);
     this.browser.close();
@@ -59,9 +60,11 @@ class WebHandler {
       const url = "https://merchant-v2.paykoko.com/login";
       await this.page.goto(url, { waitUntil: "networkidle2" });
 
+      await this.humanDelay(2000, 3500);
+
       logging.info(`2. Enter User Name - ${requestedPlatfrom}`);
       await this.page.waitForSelector("#input-1");
-      await this.humanDelay(1000, 2000);
+      await this.humanDelay(500, 1000);
       await this.page.type("#input-1", user, { delay: 150 }); // Types with delay per character
 
       logging.info(`3. Enter Password - ${requestedPlatfrom}`);
@@ -78,7 +81,7 @@ class WebHandler {
         return btn && !btn.disabled;
       });
 
-      await this.humanDelay(1000, 1500);
+      await this.humanDelay(1200, 2000);
 
       logging.info(`4. Click Login Button - ${requestedPlatfrom}`);
 
@@ -101,6 +104,8 @@ class WebHandler {
       logging.info(`1. Go to main login page - ${requestedPlatfrom}`);
       const url = "https://merchant.mintpay.lk/auth/signin";
       await this.page.goto(url, { waitUntil: "networkidle2" });
+
+      await this.humanDelay(2000, 3000);
 
       logging.info(`2. Enter User Name - ${requestedPlatfrom}`);
       await this.page.waitForSelector("#email-or-phone-input");
@@ -133,13 +138,51 @@ class WebHandler {
     }
   }
 
+  async directPayLogin(requestedPlatfrom, user, password) {
+    try {
+      logging.info(`1. Go to main login page - ${requestedPlatfrom}`);
+      const url = "https://dashboard.directpay.lk/login";
+      await this.page.goto(url, { waitUntil: "networkidle2" });
+
+      await this.humanDelay(2000, 3000);
+
+      logging.info(`2. Enter User Name - ${requestedPlatfrom}`);
+      await this.page.waitForSelector("#email");
+      await this.humanDelay(1000, 2000);
+      await this.page.type("#email", user, { delay: 150 }); // Types with delay per character
+
+      logging.info(`3. Enter Password - ${requestedPlatfrom}`);
+      await this.page.waitForSelector("#password");
+      await this.humanDelay(1000, 2000);
+      await this.page.type("#password", password, { delay: 200 });
+
+      logging.info(
+        `Waiting untail login button avilable to click - ${requestedPlatfrom}`,
+      );
+
+      await this.page.waitForSelector("#login");
+
+      await this.humanDelay(1000, 1500);
+
+      logging.info(`4. Click Login Button - ${requestedPlatfrom}`);
+      await this.page.click("#login");
+
+      await this.page.waitForNavigation({ waitUntil: "networkidle0" });
+      logging.info(`Login Complete - ${requestedPlatfrom}`);
+
+      return true;
+    } catch (error) {
+      logging.error(`Login failed - ${requestedPlatfrom}: ${error.message}`);
+      return false;
+    }
+  }
+
   // KOKO pay data extraction
   async kokoExtractProcess(requestedPlatfrom) {
     try {
       const url = "https://merchant-v2.paykoko.com/dashboard/orders/list";
 
-      await this.humanDelay(2000, 3000);
-
+      await this.humanDelay(3000, 4000);
       logging.info(`5. Goto Order History - ${requestedPlatfrom}`);
       await this.page.goto(url, { waitUntil: "networkidle2" });
 
@@ -151,20 +194,6 @@ class WebHandler {
       await this.humanDelay(2000, 3000);
 
       logging.info(`6. Extract table data - ${requestedPlatfrom}`);
-      // const data = await this.page.evaluate(() => {
-      //   const rows = Array.from(
-      //     document.querySelectorAll("table.table tbody tr"),
-      //   );
-
-      //   logging.info(
-      //     `7. Iterate each item in the table put that into a array - ${requestedPlatfrom}`,
-      //   );
-      //   return rows.map((row) => {
-      //     const cells = Array.from(row.querySelectorAll("td, th"));
-
-      //     return cells.map((singleRow) => singleRow.innerText);
-      //   });
-      // });
 
       const data = await this.page.evaluate(() => {
         const rows = Array.from(
@@ -327,7 +356,124 @@ class WebHandler {
         `Records saved to ${requestedPlatfrom}.json file - ${requestedPlatfrom}`,
       );
 
-      await this.humanDelay(1500, 2500);
+      await this.humanDelay(2000, 3500);
+
+      return true;
+    } catch (error) {
+      console.error(
+        `Extraction failed - ${requestedPlatfrom}: ${error.message}`,
+      );
+      return false;
+    }
+  }
+
+  async directPayExtractProcess(requestedPlatfrom) {
+    try {
+      const url =
+        "https://dashboard.directpay.lk/merchant/transactions?status=approve";
+
+      await this.humanDelay(2500, 3000);
+
+      logging.info(`5. Goto All Transactions - ${requestedPlatfrom}`);
+      await this.page.goto(url, { waitUntil: "networkidle2" });
+
+      logging.info(`Waiting for data rows to populate - ${requestedPlatfrom}`);
+
+      await this.page.waitForFunction(
+        () => {
+          const table = document.querySelector("#transactionTable");
+          // This returns true only if the table exists AND has at least one row in the body
+          return table && table.querySelectorAll("tbody tr").length >= 10;
+        },
+        { timeout: 15000 },
+      );
+
+      await this.humanDelay(2000, 3000);
+
+      logging.info(`6. Extract table data - ${requestedPlatfrom}`);
+
+      const data = await this.page.evaluate(() => {
+        const rows = Array.from(
+          document.querySelectorAll("#transactionTable tbody tr"),
+        );
+
+        return rows.map((row) => {
+          const cells = Array.from(row.querySelectorAll("td"));
+          const values = cells.map((cell) => cell.innerText);
+
+          let formatedDate = values[1].slice(0, 11).split("-");
+
+          const dateObj = new Date(
+            `${formatedDate[1]} ${formatedDate[0]} ${formatedDate[2]}`,
+          );
+
+          const year = dateObj.getFullYear();
+          let month = dateObj.getMonth() + 1;
+          let day = dateObj.getDate();
+
+          if (month < 10) month = `0${month}`;
+          if (day < 10) day = `0${month}`;
+
+          formatedDate = `${year}/${month}/${day}`;
+
+          const shortDayName = dateObj.toLocaleDateString(undefined, {
+            weekday: "short",
+          });
+
+          const amount = values[5];
+          const amountWithoutCommas = amount.replace(/,/g, "");
+          // PAYMENT_LINK
+
+          return {
+            id: `#${values[0]}`,
+            orderId: ``,
+            date: formatedDate,
+            amount: parseFloat(amountWithoutCommas).toFixed(2),
+            afterDiscountAmount: "",
+            customerName: values[2],
+            customerPhone: values[3],
+            user: values[4],
+            day: shortDayName,
+          };
+        });
+      });
+
+      logging.info(`7. Reverse the array - ${requestedPlatfrom}`);
+      const output = data.reverse();
+
+      logging.info(
+        `8. Write data into ${requestedPlatfrom}.json file - ${requestedPlatfrom}`,
+      );
+      fs.writeFileSync(
+        `${requestedPlatfrom}.json`,
+        JSON.stringify(output, null, 2),
+      );
+
+      logging.info(
+        `Records saved to ${requestedPlatfrom}.json file - ${requestedPlatfrom}`,
+      );
+
+      await this.humanDelay(2500, 3000);
+      logging.info(
+        `9. Click the menu button to get logout button - ${requestedPlatfrom}`,
+      );
+
+      await this.page.evaluate(() => {
+        const btn = document.querySelector("#UserDropdown");
+        btn.click();
+      });
+
+      await this.humanDelay(2000, 2800);
+
+      logging.info(`10. Click the logout button - ${requestedPlatfrom}`);
+      await this.page.waitForSelector('a[href="/logout"]');
+      const logoutButton = await this.page.$('a[href="/logout"]');
+      logoutButton.click();
+
+      await this.page.waitForNavigation({ waitUntil: "networkidle0" });
+      logging.info(`Logout scussfully - ${requestedPlatfrom}`);
+
+      await this.humanDelay(1000, 2000);
 
       return true;
     } catch (error) {

@@ -27,5 +27,9 @@ jobs:
           KOKO_PASSWORD: ${{ secrets.KOKO_PASSWORD }}
           MINTPAY_USERNAME: ${{ secrets.MINTPAY_USERNAME }}
           MINTPAY_PASSWORD: ${{ secrets.MINTPAY_PASSWORD }}
+          DIRECTPAY_USERNAME: ${{ secrets.DIRECTPAY_USERNAME }}
+          DIRECTPAY_PASSWORD: ${{ secrets.DIRECTPAY_PASSWORD }}
+          DIRECTPAY_LNL_USERNAME: ${{ secrets.DIRECTPAY_LNL_USERNAME }}
+          DIRECTPAY_LNL_PASSWORD: ${{ secrets.DIRECTPAY_LNL_PASSWORD }}
           DATA_SUBMIT_ENDPOIT: ${{ secrets.DATA_SUBMIT_ENDPOIT }}
         run: node scrape.js
