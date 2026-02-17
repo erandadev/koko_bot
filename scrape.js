@@ -60,7 +60,7 @@ async function appProcess(platforms) {
           break;
       }
     } catch (e) {
-      logging.critical(`${requestedPlatfrom} Unknown Error: ${e}`);
+      logging.critical(`Unknown Error - (${requestedPlatfrom}): ${e}`);
     }
 
     if (loginStatus) {
@@ -84,10 +84,10 @@ async function appProcess(platforms) {
             break;
         }
       } catch (e) {
-        logging.critical(`${requestedPlatfrom} Unknown Error: ${e}`);
+        logging.critical(`Unknown Error - (${requestedPlatfrom}): ${e}`);
       }
     } else {
-      /*  TODO - HANDLE LOGIN FAILED */
+      logging.critical(`Login failed - ${requestedPlatfrom}`);
     }
 
     if (dataExtractionStatus) {
@@ -103,9 +103,11 @@ async function appProcess(platforms) {
 
       if (uploadStatus) {
         logging.info(`Bot ran successfully - ${requestedPlatfrom}`);
+      } else {
+        logging.critical(`Data upload to GS failed - ${requestedPlatfrom}`);
       }
     } else {
-      /*  TODO - HANDLE DATA EXTRACTION FAILED */
+      logging.critical(`Data extraction failed - ${requestedPlatfrom}`);
     }
   }
 
@@ -116,9 +118,6 @@ async function appProcess(platforms) {
   logging.info("----------| NEW PROCESS START |----------");
   try {
     const pltforms = ["DIRECTPAY", "KOKO", "MINT", "DIRECTPAY-LNL"];
-    // const pltforms = ["DIRECTPAY"];
-    // const pltforms = ["KOKO"];
-    // const pltforms = ["MINT"];
     await appProcess(pltforms);
     logging.info("**********| END |**********");
   } catch (e) {

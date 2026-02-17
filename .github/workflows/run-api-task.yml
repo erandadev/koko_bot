@@ -2,9 +2,9 @@ name: Scheduled API Request
 
 on:
   schedule:
-    # This runs every 15 minutes (Cron syntax)
+    # Run every 15 min
     - cron: "*/15 * * * *"
-  workflow_dispatch: # Allows you to run it manually for testing
+  workflow_dispatch:
 
 jobs:
   send-data:
