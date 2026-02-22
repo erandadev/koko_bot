@@ -7,11 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 
 const logging = logger(__filename);
 
-const uploadToGoogleSheet = async (
-  requestedPlatfrom,
-  file_name,
-  requestEndPoint,
-) => {
+const uploadToGoogleSheet = async (requestedPlatfrom, file_name, requestEndPoint) => {
   try {
     logging.info(`Read ${file_name}`);
     let rawData = fs.readFileSync(file_name, "utf8");
@@ -19,6 +15,7 @@ const uploadToGoogleSheet = async (
 
     // 2. Parse the string into a JavaScript object
     logging.info(`Parse ${file_name} file data into json`);
+    
     const jsonData = {
       platform: requestedPlatfrom,
       data: rawData,

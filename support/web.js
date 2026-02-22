@@ -36,9 +36,7 @@ class WebHandler {
     await this.page.setViewport({ width: 1920, height: 1080 });
 
     // Set a human User-Agent
-    await this.page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    );
+    await this.page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
   }
 
   // Helper - Human like delay function (randomizing delays)
@@ -72,9 +70,7 @@ class WebHandler {
       await this.humanDelay(1000, 2000);
       await this.page.type("#input-2", password, { delay: 200 });
 
-      logging.info(
-        `Waiting untail login button avilable to click - ${requestedPlatfrom}`,
-      );
+      logging.info(`Waiting untail login button avilable to click - ${requestedPlatfrom}`);
 
       await this.page.waitForFunction(() => {
         const btn = document.querySelector("button.btn.btn-dark");

@@ -31,32 +31,16 @@ async function appProcess(platforms) {
     try {
       switch (requestedPlatfrom) {
         case "KOKO":
-          loginStatus = await web.kokoLogin(
-            requestedPlatfrom,
-            process.env.KOKO_USERNAME,
-            process.env.KOKO_PASSWORD,
-          );
+          loginStatus = await web.kokoLogin(requestedPlatfrom, process.env.KOKO_USERNAME, process.env.KOKO_PASSWORD);
           break;
         case "MINT":
-          loginStatus = await web.mintPayLogin(
-            requestedPlatfrom,
-            process.env.MINTPAY_USERNAME,
-            process.env.MINTPAY_PASSWORD,
-          );
+          loginStatus = await web.mintPayLogin(requestedPlatfrom, process.env.MINTPAY_USERNAME, process.env.MINTPAY_PASSWORD);
           break;
         case "DIRECTPAY":
-          loginStatus = await web.directPayLogin(
-            requestedPlatfrom,
-            process.env.DIRECTPAY_USERNAME,
-            process.env.DIRECTPAY_PASSWORD,
-          );
+          loginStatus = await web.directPayLogin(requestedPlatfrom, process.env.DIRECTPAY_USERNAME, process.env.DIRECTPAY_PASSWORD);
           break;
         case "DIRECTPAY-LNL":
-          loginStatus = await web.directPayLogin(
-            requestedPlatfrom,
-            process.env.DIRECTPAY_LNL_USERNAME,
-            process.env.DIRECTPAY_LNL_PASSWORD,
-          );
+          loginStatus = await web.directPayLogin(requestedPlatfrom, process.env.DIRECTPAY_LNL_USERNAME, process.env.DIRECTPAY_LNL_PASSWORD);
           break;
       }
     } catch (e) {
@@ -67,20 +51,16 @@ async function appProcess(platforms) {
       try {
         switch (requestedPlatfrom) {
           case "KOKO":
-            dataExtractionStatus =
-              await web.kokoExtractProcess(requestedPlatfrom);
+            dataExtractionStatus = await web.kokoExtractProcess(requestedPlatfrom);
             break;
           case "MINT":
-            dataExtractionStatus =
-              await web.mintPayExtractProcess(requestedPlatfrom);
+            dataExtractionStatus = await web.mintPayExtractProcess(requestedPlatfrom);
             break;
           case "DIRECTPAY":
-            dataExtractionStatus =
-              await web.directPayExtractProcess(requestedPlatfrom);
+            dataExtractionStatus = await web.directPayExtractProcess(requestedPlatfrom);
             break;
           case "DIRECTPAY-LNL":
-            dataExtractionStatus =
-              await web.directPayExtractProcess(requestedPlatfrom);
+            dataExtractionStatus = await web.directPayExtractProcess(requestedPlatfrom);
             break;
         }
       } catch (e) {
@@ -91,15 +71,9 @@ async function appProcess(platforms) {
     }
 
     if (dataExtractionStatus) {
-      logging.info(
-        `${requestedPlatfrom} data succefully extracted & saved in to ${requestedPlatfrom}.json!`,
-      );
+      logging.info(`${requestedPlatfrom} data succefully extracted & saved in to ${requestedPlatfrom}.json!`);
 
-      uploadStatus = uploadToGoogleSheet(
-        requestedPlatfrom,
-        `${requestedPlatfrom}.json`,
-        process.env.DATA_SUBMIT_ENDPOIT,
-      );
+      uploadStatus = uploadToGoogleSheet(requestedPlatfrom, `${requestedPlatfrom}.json`, process.env.DATA_SUBMIT_ENDPOIT);
 
       if (uploadStatus) {
         logging.info(`Bot ran successfully - ${requestedPlatfrom}`);
