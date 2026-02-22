@@ -22,6 +22,7 @@ class WebHandler {
   async init() {
     this.browser = await puppeteer.launch({
       headless: "new",
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
       // headless: false,
       args: [
         "--disable-blink-features=AutomationControlled", // Hide automation
