@@ -17,3 +17,6 @@ steps:
 
 images:
   - "gcr.io/$PROJECT_ID/scraper"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
